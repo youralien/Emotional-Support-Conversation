@@ -1,9 +1,9 @@
-CUDA_VISIBLE_DEVICES=1 python infer.py \
+CUDA_VISIBLE_DEVICES=0 python infer.py \
     --config_name strat \
     --inputter_name strat \
     --add_nlg_eval \
     --seed 0 \
-    --load_checkpoint /home/zhengchujie/EmotionalSupportConversation/DATA/strat.strat/2021-07-31145609.3e-05.16.1gpu/epoch-2.pt \
+    --load_checkpoint ./DATA/strat.strat/2022-09-27190751.3e-05.16.0gpu/epoch-2.pt \
     --fp16 false \
     --max_input_length 160 \
     --max_decoder_input_length 40 \

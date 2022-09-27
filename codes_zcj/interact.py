@@ -197,10 +197,11 @@ while True:
     text = toker.decode(out).encode('ascii', 'ignore').decode('ascii').strip()
     
     # OLD WAY
-    # strat_id_out = encoded_info['pred_strat_id_top3'].tolist()[0][0]  # 取top1 策略id
+    strat_id_out = encoded_info['pred_strat_id_top3'].tolist()[0][0]  # 取top1 策略id
 
+    print("            DEBUG: pred_strat_id", encoded_info['pred_strat_id'].tolist())
     # AUTHORS SUGGESTION 
-    strat_id_out = encoded_info['pred_strat_id'][0]
+    # strat_id_out = encoded_info['pred_strat_id'][0]
     strategy = id2strategy[strat_id_out]
     print("   AI: " + "[" + strategy + "] " + text)
 
