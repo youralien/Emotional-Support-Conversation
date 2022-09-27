@@ -1,4 +1,4 @@
-CUDA_VISIBLE_DEVICES=1 python train.py \
+CUDA_VISIBLE_DEVICES=0 python train.py \
     --config_name strat \
     --inputter_name strat \
     --eval_input_file ./_reformat/valid.txt \
