@@ -127,6 +127,18 @@ generation_kwargs = {
     'eos_token_id': eos,
 }
 
+id2strategy = {
+        0: "Question",
+        1: "Restatement or Paraphrasing",
+        2: "Reflection of feelings",
+        3: "Self-disclosure",
+        4: "Affirmation and Reassurance",
+        5: "Providing Suggestions",
+        6: "Information",
+        7: "Others"
+     }
+
+
 eof_once = False
 history = {'dialog': [],}
 print('\n\nA new conversation starts!')
@@ -164,6 +176,7 @@ while True:
     history['dialog'].append({ # dummy tgt
         'text': 'n/a',
         'speaker': 'sys',
+        'strategy': 'Others'
     })
     inputs = inputter.convert_data_to_inputs(history, toker, **dataloader_kwargs)
     inputs = inputs[-1:]
@@ -173,15 +186,27 @@ while True:
     batch.update(generation_kwargs)
     encoded_info, generations = model.generate(**batch)
     
+
+    # out = generations[0].tolist()
+    # out = cut_seq_to_eos(out, eos)
+    # text = toker.decode(out).encode('ascii', 'ignore').decode('ascii').strip()
+    # print("   AI: " + text)
+
     out = generations[0].tolist()
     out = cut_seq_to_eos(out, eos)
     text = toker.decode(out).encode('ascii', 'ignore').decode('ascii').strip()
-    print("   AI: " + text)
     
+    # OLD WAY
+    # strat_id_out = encoded_info['pred_strat_id_top3'].tolist()[0][0]  # 取top1 策略id
+
+    # AUTHORS SUGGESTION 
+    strat_id_out = encoded_info['pred_strat_id'][0]
+    strategy = id2strategy[strat_id_out]
+    print("   AI: " + "[" + strategy + "] " + text)
+
     history['dialog'].pop()
     history['dialog'].append({
         'text': text,
         'speaker': 'sys',
+        'strategy': strategy
     })
-    
-
